@@ -1,0 +1,148 @@
+/* Container */
+.fl-manage-groups-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Title */
+/* Header */
+.fl-card-header {
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.fl-card-header h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.fl-card-description {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+
+/* Table */
+.fl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Header */
+.fl-table thead th {
+    text-align: left;
+    font-weight: 500;
+    color: #6B7280;
+    padding: 14px 12px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+/* Rows */
+.fl-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.fl-table tbody tr:hover {
+    background: #F9FAFB;
+}
+
+/* Cells */
+.fl-table tbody td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #E5E7EB;
+    color: #111827;
+    vertical-align: middle;
+}
+
+/* Jitsi link */
+.fl-table a {
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.fl-table a:hover {
+    text-decoration: underline;
+}
+
+/* Action column */
+.fl-table th:last-child,
+.fl-table td:last-child {
+    text-align: right;
+    width: 80px;
+}
+
+/* Action button (⋮) */
+.fl-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: end;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #6B7280;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fl-action-btn:hover {
+    color: #6B7280;
+}
+
+.fl-manage-groups-card .fl-action-btn i:hover {
+    color: #6B7280;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fl-table thead {
+        display: none;
+    }
+
+    .fl-table,
+    .fl-table tbody,
+    .fl-table tr,
+    .fl-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .fl-table tr {
+        margin-bottom: 16px;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .fl-table td {
+        border: none;
+        padding: 8px 0;
+    }
+
+    .fl-table td:last-child {
+        text-align: left;
+        margin-top: 8px;
+    }
+}
+
+/* Remove ONLY internal vertical borders */
+.fl-table th,
+.fl-table td {
+    border-left: none;
+    border-right: none;
+}
+
+/* Keep table outer borders (left & right) */
+.fl-table {
+    border-left: 1px solid #e5e7ebdb;
+    border-right: 1px solid #E5E7EB;
+}
+

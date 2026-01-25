@@ -1,0 +1,74 @@
+
+.fl-dashboard-card{
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 30px;
+    position: relative;
+    padding-right: 220px; /* espace pour le texte */
+    overflow: visible; /* IMPORTANT pour l’effet sortie */
+}
+
+.fl-right img{
+    position: absolute;
+    right: -60px; /* sort de la card */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+
+.fl-left h2{
+    margin:5px 0;
+}
+
+.fl-title{
+    font-size:14px;
+    color:#8a8fa3;
+}
+
+.fl-subtitle{
+    color:#8a8fa3;
+    margin-bottom:20px;
+}
+
+.fl-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.fl-actions span{
+    background:#fff;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.fl-dashboard-content select,
+.fl-jitsi-form input[type="text"]{
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    margin-top:10px;
+}
+
+.fl-jitsi-form input[type="submit"]{
+    margin-left:10px;
+    padding:10px 16px;
+    border-radius:10px;
+    border:none;
+    background:#4f6df5;
+    color:#fff;
+    cursor:pointer;
+}
+
+.fl-success{
+    margin-top:10px;
+    color:green;
+}
+

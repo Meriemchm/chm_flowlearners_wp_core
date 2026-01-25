@@ -1,0 +1,31 @@
+/* === BODY PAGE USER === */
+/* === PAGE USER ULTIMATE MEMBER === */
+.um-profile.um {
+    background: #203955 !important;
+    color: #fff;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+/* === CONTAINER PRINCIPAL === */
+.um-profile.um .um-form {
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+}
+.um-header .um-name {
+    text-transform: capitalize;
+}
+
+.um-profile.um a:hover {
+    color: #6386ac !important;
+
+}
+
+/* === MASQUER NAVBAR (About / Posts / Comments) === */
+.um-profile-navbar,
+.um-profile-nav {
+    display: none !important;
+}
+

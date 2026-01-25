@@ -1,0 +1,241 @@
+/* ==============================
+   RESET PAGE
+============================== */
+body.page-template-default .um {
+  max-width: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ==============================
+   MODERN INPUTS FOR ULTIMATE MEMBER
+============================== */
+
+/* Champs texte, email et password */
+.um-field-area .um-form-field[type="text"],
+.um-field-area .um-form-field[type="email"],
+.um-field-area .um-form-field[type="password"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    border-radius: 8px !important;
+    border: 1px solid #d1d5db; /* gris clair */
+    background: #f7f9fc;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+}
+
+/* Placeholder */
+.um-field-area .um-form-field::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Focus effect */
+.um-field-area .um-form-field:focus {
+    border-color: #2bb39b; /* vert moderne */
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(43, 179, 155, 0.15);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Disable Chrome autocomplete background */
+.um input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f7f9fc inset;
+    -webkit-text-fill-color: #111;
+}
+
+/* ==============================
+   WRAPPER & FORM STYLING
+============================== */
+.um-form {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.um-account-profile-link {
+  color: #203955 !important;
+}
+
+.picker__box,
+.picker__nav--next:hover,
+.picker__nav--prev:hover,
+.um .um-field-group-head,
+.um .um-members-pagi span.current,
+.um .um-members-pagi span.current:hover,
+.um .um-profile-nav-item.active a,
+.um .um-profile-nav-item.active a:hover,
+.um-modal-btn,
+.um-modal-btn.disabled,
+.um-modal-btn.disabled:hover,
+.um-modal-header,
+.upload,
+div.uimob800 .um-account-side li a.current,
+div.uimob800 .um-account-side li a.current:hover {
+  background: #d6d8dc !important;
+}
+
+/* CONTAINER */
+.um-account-side ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+/* ITEM */
+.um-account-side ul li {
+  margin: 0;
+  background: #ffffff;
+}
+
+/* LIEN */
+.um-account-side ul li a {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f5f7fb;
+  color: #203955;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* ICON + TEXTE */
+.um-account-icon,
+.um-account-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* HOVER */
+.um-account-side ul li a:hover {
+  background: #203955;
+  color: #fff !important;
+  transform: translateX(4px);
+}
+
+/* ACTIVE */
+.um-account-side ul li a.current {
+  background: #dddee2;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.um-account-side li a span.um-account-title:hover{
+  color: #ffffff !important;
+}
+
+/* FLECHE */
+.um-account-arrow i {
+  opacity: 0.4;
+  transition: all 0.25s ease;
+}
+
+.um-account-side ul li a:hover .um-account-arrow i {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* ICONES */
+.um-account-side i {
+  color: #6386ac !important;
+}
+
+.um form {
+  background: #fff;
+  padding: 60px;
+}
+
+/* TITLES */
+.um h2,
+.um .um-header {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* ==============================
+   BUTTONS (UNCHANGED)
+============================== */
+.um input[type="submit"] {
+  margin-top: 20px;
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background: #203955 !important;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.um .um-button {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background: transparent !important;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: #203955 2px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.um input[type="submit"]:hover,
+.um .um-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Active */
+.um input[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Disabled */
+.um input[type="submit"]:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* REMOVE SOCIAL LOGIN */
+.um-social-login {
+  display: none !important;
+}
+
+/* REMOVE BORDERS */
+.um .um-form {
+  border: none;
+}
+
+/* ==============================
+   MOBILE RESPONSIVE
+============================== */
+@media (max-width: 900px) {
+  .um {
+    grid-template-columns: 1fr;
+  }
+
+  .um:before {
+    display: none;
+  }
+
+  .um form {
+    padding: 40px 20px;
+  }
+}

@@ -1,0 +1,19 @@
+/* app.css */
+
+/* Base */
+@import url("src/sidebar.css");
+@import url("src/dashboard.css");
+@import url("src/manage-groups.css");
+@import url("src/um-auth.css");
+@import url("src/um-user-custom.css");
+@import url("src/class-page.css");
+@import url("src/edit-group.css");
+@import url("src/wp-form.css");
+@import url("src/animate-scroll.css");
+
+
+.fl-animate-scroll {
+    opacity: 1;
+}
+
+
