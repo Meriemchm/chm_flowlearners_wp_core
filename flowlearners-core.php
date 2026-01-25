@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: FlowLearners Core
-Description: Core features for FlowLearners platform
+Description: Core features for FlowLearners platform learning
 Version: 1.5.0
 Author: Meriem
 */
