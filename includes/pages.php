@@ -10,12 +10,13 @@ foreach ($groups as $group) {
 
     // garder uniquement A1, A2, B1, B2, C1, C2 (et futurs D1, etc.)
     // Accepte A1, B2, C1… et Explorer1, Communicator2
-    if (!preg_match('/^([A-Z][0-9]|[A-Za-z]+[0-9]+)$/', $group_name)) {
+    if (!preg_match('/^([A-Z][0-9]|[A-Za-z]+ ?[0-9]+)$/', $group_name)) {
         continue;
     }
 
 
-    $slug = 'page-classe-' . strtolower($group_name);
+    $slug = 'page-classe-' . sanitize_title($group_name);
+
 
     if (!get_page_by_path($slug)) {
         wp_insert_post([

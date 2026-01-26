@@ -69,12 +69,11 @@ add_filter('the_content', function($content){
                         $room = sanitize_title($class_name);
                     ?>
                     <div class="fl-class-jitsi">
-                        <?php
-                            echo do_shortcode(
-                                '[jitsi-meet-wp name="' . esc_attr($room) . '" width="1080" height="720"]'
-                            );
-                        ?>
+                        <?= apply_shortcodes(
+                            '[jitsi-meet-wp name="' . esc_attr($room) . '" width="1080" height="720"]'
+                        ); ?>
                     </div>
+
 
                 <?php else: ?>
 

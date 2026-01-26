@@ -40,7 +40,6 @@ add_shortcode('fl_manage_groups', function () {
     foreach ($all_groups as $group) {
         if (strtolower($group->name) === 'registered') continue; // ignore Registered
         $groups[] = $group->name;
-        var_dump( $group->name);
     }
 
     ob_start(); ?>
@@ -71,7 +70,7 @@ add_shortcode('fl_manage_groups', function () {
                 <tbody>
 
                 <?php foreach ($groups as $g):
-                    $page = get_page_by_path('page-classe-' . strtolower($g));
+                    $page = get_page_by_path('page-classe-' . sanitize_title($g));
                     if (!$page) continue;
 
                     $schedule = get_post_meta($page->ID, 'class_schedule', true);
@@ -79,7 +78,8 @@ add_shortcode('fl_manage_groups', function () {
                     $period = get_post_meta($page->ID, 'class_period', true);
 
                     // 🔹 Lien Jitsi auto (non modifiable)
-                    $jitsi = 'https://jitsi-01.csn.tu-chemnitz.de/meeting/classroom-' . strtolower($g);
+                    $jitsi = 'https://jitsi-01.csn.tu-chemnitz.de/meeting/classroom-' . sanitize_title($g);
+
 
                     // 🔹 Jitsi enabled ON/OFF
                     $jitsi_enabled = get_post_meta($page->ID, 'jitsi_enabled', true) === '1';

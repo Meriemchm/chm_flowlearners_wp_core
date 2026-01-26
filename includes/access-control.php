@@ -1,4 +1,6 @@
 <?php
+
+// Prevent direct access for student classroom pages
 if (!defined('ABSPATH')) exit;
 
 add_action('template_redirect', function () {
@@ -24,7 +26,8 @@ add_action('template_redirect', function () {
 
 
     // Nom du groupe attendu (ex: A1, Explorer1, etc.)
-    $expected_group = $matches[1]; // on ne force plus strtoupper, on compare en lowercase
+    $expected_group = sanitize_title($matches[1]);
+// on ne force plus strtoupper, on compare en lowercase
 
     $groups_user = new Groups_User($user->ID);
     $user_group_ids = $groups_user->group_ids_deep;
@@ -39,10 +42,11 @@ add_action('template_redirect', function () {
         // On ignore "Registered"
         if (strtolower($group->name) === 'registered') continue;
 
-        if (strtolower($group->name) === strtolower($expected_group)) {
+        if (sanitize_title($group->name) === $expected_group) {
             $has_access = true;
             break;
         }
+
     }
 
     if (!$has_access) {

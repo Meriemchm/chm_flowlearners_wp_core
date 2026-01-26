@@ -50,13 +50,12 @@ if (in_array('student', $user->roles)) {
             continue;
         }
 
-        // Accepte : A1, B2, C1, D1, Explorer1, Communicator2, etc.
-        if (!preg_match('/^[A-Za-z]+[0-9]+$/', $group->name)) {
-            continue;
-        }
+        if (!preg_match('/^[A-Za-z \-]+[0-9]+$/', $group->name)) {
+                continue;
+            }
 
 
-        $slug = 'page-classe-' . strtolower($group->name);
+        $slug = 'page-classe-' . sanitize_title($group->name);
         $page_to_show = get_page_by_path($slug);
 
         if ($page_to_show) {
