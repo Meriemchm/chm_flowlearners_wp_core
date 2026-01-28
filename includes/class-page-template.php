@@ -77,6 +77,7 @@ add_filter('the_content', function($content){
 
                     <?php
                         $room = sanitize_title($class_name);
+         
                     ?>
                     <div class="fl-class-jitsi">
                         <?= apply_shortcodes(

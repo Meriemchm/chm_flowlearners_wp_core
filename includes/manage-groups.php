@@ -77,9 +77,12 @@ add_shortcode('fl_manage_groups', function () {
                     $days     = get_post_meta($page->ID, 'class_days', true);
                     $period = get_post_meta($page->ID, 'class_period', true);
 
-                    // 🔹 Lien Jitsi auto (non modifiable)
-                    $jitsi = 'https://jitsi-01.csn.tu-chemnitz.de/meeting/classroom-' . sanitize_title($g);
+                    // Transformation identique à $class_name
+                    $name = preg_replace('/[\s\-]+([0-9]+)$/', ' Group $1', $g);
 
+
+                    // Lien Jitsi
+                    $jitsi = 'https://jitsi-01.csn.tu-chemnitz.de/meeting/classroom-' . sanitize_title($name);
 
                     // 🔹 Jitsi enabled ON/OFF
                     $jitsi_enabled = get_post_meta($page->ID, 'jitsi_enabled', true) === '1';
