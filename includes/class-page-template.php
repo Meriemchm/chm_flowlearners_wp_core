@@ -8,7 +8,17 @@ add_filter('the_content', function($content){
 
     if(str_starts_with($page_slug, 'page-classe-')){
 
-        $class_name     = get_post_meta(get_the_ID(), 'class_name', true) ?: strtoupper(str_replace('page-classe-', 'Classroom ', $page_slug));
+        $page_slug = get_post_field('post_name', get_the_ID());
+
+        // enlever "page-classe-"
+        $name = str_replace('page-classe-', '', $page_slug);
+
+        // remplace le dernier espace ou tiret avant le dernier chiffre par " Group "
+        $name = preg_replace('/[\s\-]+([0-9]+)$/', ' Group $1', $name);
+
+        $class_name = get_post_meta(get_the_ID(), 'class_name', true)
+            ?: 'Classroom ' . ucwords($name);
+
         $teacher        = get_post_meta(get_the_ID(), 'teacher_name', true) ?: 'Mansouri Bouchra';
         $banner         = get_post_meta(get_the_ID(), 'class_banner', true);
         $period = get_post_meta(get_the_ID(), 'class_period', true) ?: 'Not defined';

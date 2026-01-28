@@ -10,9 +10,10 @@ foreach ($groups as $group) {
 
     // garder uniquement A1, A2, B1, B2, C1, C2 (et futurs D1, etc.)
     // Accepte A1, B2, C1… et Explorer1, Communicator2
-    if (!preg_match('/^([A-Z][0-9]|[A-Za-z]+ ?[0-9]+)$/', $group_name)) {
-        continue;
+    if (!preg_match('/^[A-Za-z]+([ -]?[0-9]+)+$/', $group->name)) {
+    continue;
     }
+
 
 
     $slug = 'page-classe-' . sanitize_title($group_name);

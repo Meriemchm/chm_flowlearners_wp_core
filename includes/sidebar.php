@@ -50,7 +50,7 @@ if (in_array('student', $user->roles)) {
             continue;
         }
 
-        if (!preg_match('/^[A-Za-z \-]+[0-9]+$/', $group->name)) {
+        if (!preg_match('/^[A-Za-z0-9 \-]+$/', $group->name)) {
                 continue;
             }
 
