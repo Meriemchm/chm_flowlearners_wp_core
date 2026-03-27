@@ -112,14 +112,16 @@ add_action('wp_head', function() {
  * 6️⃣ Ajouter le bouton profil à droite, seul dans la navbar
  */
 add_action('wp_body_open', function() {
-    if(!defined('VISIBILITY') || VISIBILITY !== 'logged_in') return;
+    if (!defined('VISIBILITY') || VISIBILITY !== 'logged_in') return;
 
     $current_user = wp_get_current_user();
     $avatar = get_avatar_url($current_user->ID, ['size' => 32]);
     $display_name = $current_user->display_name;
-    $profile_url = esc_url(get_edit_profile_url($current_user->ID));
 
-    echo '<a href="' . $profile_url . '" class="custom-profile-button">';
+    // URL type /user/username
+    $profile_url = home_url('/user/' . $current_user->user_nicename);
+
+    echo '<a href="' . esc_url($profile_url) . '" class="custom-profile-button">';
     echo '<img src="' . esc_url($avatar) . '" alt="Avatar">';
     echo '<span class="custom-profile-name">' . esc_html($display_name) . '</span>';
     echo '</a>';
