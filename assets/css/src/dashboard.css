@@ -78,7 +78,7 @@
     }
 
     .fl-right img {
-        display: none;
+        display: none !important;
     }
 }
 
