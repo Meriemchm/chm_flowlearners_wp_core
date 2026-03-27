@@ -71,14 +71,15 @@
     margin-top:10px;
     color:green;
 }
+/* Responsive pour mobile */
 @media (max-width: 768px) {
     .fl-dashboard-card {
         flex-direction: column;
-        padding-right: 30px; /* retire l’espace pour l’image */
+        padding-right: 30px; /* retire l'espace pour l'image */
     }
 
-    .fl-right img {
-        display: none !important;
+    .fl-dashboard-card .fl-right {
+        display: none !important; /* cache complètement le container */
     }
 }
 
