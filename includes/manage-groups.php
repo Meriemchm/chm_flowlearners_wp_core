@@ -28,7 +28,9 @@ add_action('init', function () {
 // 🔹 Manage Groups Table
 add_shortcode('fl_manage_groups', function () {
 
-    if (!current_user_can('tutor') && !current_user_can('administrator')) {
+    $user = wp_get_current_user();
+
+    if (!array_intersect(['administrator', 'tutor'], $user->roles)) {
         return '<p>Accès interdit</p>';
     }
 
