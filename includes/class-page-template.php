@@ -68,34 +68,43 @@ add_filter('the_content', function($content){
         </div>
 
 
-                    <!-- FlexMeeting Iframe -->
-                            <?php
-                $jitsi_enabled = get_post_meta(get_the_ID(), 'jitsi_enabled', true);
-                ?>
+            <!-- Zoom Virtual Classroom Section -->
+            <?php
+            $zoom_enabled = get_post_meta(get_the_ID(), 'zoom_enabled', true);
+            if ($zoom_enabled === '') {
+                $zoom_enabled = get_post_meta(get_the_ID(), 'jitsi_enabled', true) ?: '0';
+            }
+            $zoom_link = get_post_meta(get_the_ID(), 'zoom_link', true);
+            if (empty($zoom_link)) {
+                $zoom_link = get_post_meta(get_the_ID(), 'jitsi_link', true);
+            }
+            ?>
 
-                <?php if ($jitsi_enabled === '1'): ?>
+            <?php if ($zoom_enabled === '1'): ?>
 
-                    <?php
-                        $room = sanitize_title($class_name);
-         
-                    ?>
-                    <div class="fl-class-jitsi">
-                        <?= apply_shortcodes(
-                            '[jitsi-meet-wp name="' . esc_attr($room) . '" width="1080" height="720"]'
-                        ); ?>
-                    </div>
+                <div class="fl-class-zoom">
+                    <?php if (!empty($zoom_link)): ?>
+                        <a href="<?= esc_url($zoom_link); ?>" target="_blank" rel="noopener noreferrer" class="fl-zoom-btn">
+                            Join Class
+                        </a>
+                    <?php else: ?>
+                        <div style="padding:20px; background:#f4f5f6; border:1px solid #ffeeba; border-radius:6px; text-align:center;">
+                            <p style="color:#856404; font-weight:bold;">
+                                The class has started, but no Zoom link has been added yet.
+                            </p>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
+            <?php else: ?>
 
-                <?php else: ?>
-
-                    <div class="fl-class-jitsi-closed" style="padding:20px; background:#f4f5f6; border:1px solid #ffeeba; border-radius:6px; text-align:center;">
+                <div class="fl-class-zoom-closed" style="padding:20px; background:#f4f5f6; border:1px solid #ffeeba; border-radius:6px; text-align:center;">
                     <p style="color:#856404; font-weight:bold;">
                         ⏳ The class has not started yet. Please refresh the page or revisit this page at the scheduled time to join the class.
                     </p>
-                    </div>
+                </div>
 
-
-                <?php endif; ?>
+            <?php endif; ?>
 
 
 

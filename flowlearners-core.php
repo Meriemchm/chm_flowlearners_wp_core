@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: FlowLearners Core
-Description: Core features for FlowLearners platform learning
-Version: 1.5.0
+Description: Core features for FlowLearners platform learning with integrated Zoom classrooms
+Version: 1.6.0
 Author: Meriem
 */
 

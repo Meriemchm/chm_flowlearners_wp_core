@@ -1,31 +1,52 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-// 🔹 Toggle Jitsi ON/OFF
+/**
+ * 🔹 Toggle Zoom Access ON/OFF
+ * Toggles whether students can currently join the live Zoom session for this group.
+ */
 add_action('init', function () {
-    if (!isset($_GET['toggle_jitsi'], $_GET['group_id'])) return;
+    $has_toggle = isset($_GET['toggle_zoom']) || isset($_GET['toggle_jitsi']);
+    if (!$has_toggle || !isset($_GET['group_id'])) return;
+
     if (!current_user_can('tutor') && !current_user_can('administrator')) return;
 
     $pid = intval($_GET['group_id']);
+    if (!$pid) return;
 
-    // Toggle Jitsi
-    $current = get_post_meta($pid, 'jitsi_enabled', true);
+    // Nonce verification for security
+    $nonce = isset($_GET['fl_zoom_nonce']) ? sanitize_text_field(wp_unslash($_GET['fl_zoom_nonce'])) : '';
+    if (!wp_verify_nonce($nonce, 'fl_toggle_zoom_' . $pid)) {
+        wp_die(__('Security check failed. Please refresh the page and try again.', 'flowlearners'), 403);
+    }
+
+    // Toggle Zoom access state
+    $current = get_post_meta($pid, 'zoom_enabled', true);
+    if ($current === '') {
+        $current = get_post_meta($pid, 'jitsi_enabled', true) ?: '0';
+    }
     $new = ($current === '1') ? '0' : '1';
-    update_post_meta($pid, 'jitsi_enabled', $new);
+    update_post_meta($pid, 'zoom_enabled', $new);
 
-    // Forcer le navigateur à ne pas utiliser le cache
+    // Clean up legacy meta if present
+    delete_post_meta($pid, 'jitsi_enabled');
+
+    // Force browser not to cache response
     header('Cache-Control: no-cache, no-store, must-revalidate');
     header('Pragma: no-cache');
     header('Expires: 0');
 
-    // Redirect vers la page précédente
-    $redirect = wp_get_referer() ?: site_url(); // fallback si wp_get_referer vide
+    // Safe redirect back
+    $redirect = wp_get_referer() ?: site_url('/manage-groups');
+    $redirect = remove_query_arg(['toggle_zoom', 'toggle_jitsi', 'group_id', 'fl_zoom_nonce'], $redirect);
     wp_safe_redirect($redirect);
     exit;
 });
 
 
-// 🔹 Manage Groups Table
+/**
+ * 🔹 Manage Groups Table Shortcode [fl_manage_groups]
+ */
 add_shortcode('fl_manage_groups', function () {
 
     $user = wp_get_current_user();
@@ -34,7 +55,7 @@ add_shortcode('fl_manage_groups', function () {
         return '<p>Accès interdit</p>';
     }
 
-    // 🔹 Récupère dynamiquement tous les groupes
+    // Récupère dynamiquement tous les groupes
     $all_groups = Groups_Group::get_groups();
     
     $groups = [];
@@ -53,7 +74,7 @@ add_shortcode('fl_manage_groups', function () {
             <div class="fl-card-header">
                 <h4>Manage Groups</h4>
                 <p class="fl-card-description">
-                    Manage schedules, days and Jitsi access for each group.
+                    Manage schedules, days, and Zoom virtual classroom access for each group.
                 </p>
             </div>
 
@@ -64,8 +85,8 @@ add_shortcode('fl_manage_groups', function () {
                         <th>Times</th>
                         <th>Days</th>
                         <th>Period</th>
-                        <th>Jitsi Link</th>
-                        <th>Jitsi Access</th>
+                        <th>Zoom Link</th>
+                        <th>Class Access</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -77,17 +98,27 @@ add_shortcode('fl_manage_groups', function () {
 
                     $schedule = get_post_meta($page->ID, 'class_schedule', true);
                     $days     = get_post_meta($page->ID, 'class_days', true);
-                    $period = get_post_meta($page->ID, 'class_period', true);
+                    $period   = get_post_meta($page->ID, 'class_period', true);
 
-                    // Transformation identique à $class_name
-                    $name = preg_replace('/[\s\-]+([0-9]+)$/', ' Group $1', $g);
+                    // Zoom meeting link for this group
+                    $zoom_link = get_post_meta($page->ID, 'zoom_link', true);
+                    if (empty($zoom_link)) {
+                        $zoom_link = get_post_meta($page->ID, 'jitsi_link', true);
+                    }
 
+                    // Zoom access status ON/OFF
+                    $zoom_enabled = get_post_meta($page->ID, 'zoom_enabled', true);
+                    if ($zoom_enabled === '') {
+                        $zoom_enabled = get_post_meta($page->ID, 'jitsi_enabled', true) ?: '0';
+                    }
+                    $is_open = ($zoom_enabled === '1');
 
-                    // Lien Jitsi
-                    $jitsi = 'https://jitsi-01.csn.tu-chemnitz.de/meeting/classroom-' . sanitize_title($name);
-
-                    // 🔹 Jitsi enabled ON/OFF
-                    $jitsi_enabled = get_post_meta($page->ID, 'jitsi_enabled', true) === '1';
+                    // Nonce URL for toggling
+                    $toggle_url = wp_nonce_url(
+                        site_url('?toggle_zoom=1&group_id=' . $page->ID),
+                        'fl_toggle_zoom_' . $page->ID,
+                        'fl_zoom_nonce'
+                    );
                 ?>
                     <tr>
                         <td><?= esc_html($g) ?></td>
@@ -95,20 +126,25 @@ add_shortcode('fl_manage_groups', function () {
                         <td><?= esc_html($days ?: '—') ?></td>
                         <td><?= esc_html($period ?: '—') ?> Months</td>
                         <td>
-                            <a href="<?= esc_url($jitsi) ?>" target="_blank">Jitsi Link</a>
+                            <?php if (!empty($zoom_link)): ?>
+                                <a href="<?= esc_url($zoom_link) ?>" target="_blank">Zoom Link</a>
+                            <?php else: ?>
+                                —
+                            <?php endif; ?>
                         </td>
                         <td>
-                            <!-- Toggle Jitsi Access -->
+                            <!-- Toggle Zoom Access -->
                             <a class="fl-action-btn"
-                               href="<?= site_url('?toggle_jitsi=1&group_id=' . $page->ID) ?>"
-                               style="color: <?= $jitsi_enabled ? '#28a745' /* vert */ : '#dc3545' /* rouge */ ?>;">
-                                <?= $jitsi_enabled ? 'Open' : 'Closed' ?>
+                               href="<?= esc_url($toggle_url) ?>"
+                               style="color: <?= $is_open ? '#28a745' /* vert */ : '#dc3545' /* rouge */ ?>;">
+                                <?= $is_open ? 'Open' : 'Closed' ?>
                             </a>
                         </td>
                         <td>
-                            <!-- Edit Group -->
+                            <!-- Edit Group (Group Actions) -->
                             <a class="fl-action-btn"
-                               href="<?= site_url('/edit-group/?group_id=' . $page->ID) ?>">
+                               href="<?= esc_url(site_url('/edit-group/?group_id=' . $page->ID)) ?>"
+                               title="Edit Group & Zoom Link">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                         </td>

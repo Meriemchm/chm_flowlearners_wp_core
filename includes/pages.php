@@ -25,7 +25,7 @@ foreach ($groups as $group) {
             'post_name'    => $slug,
             'post_status'  => 'publish',
             'post_type'    => 'page',
-            'post_content' => 'Bienvenue dans la classe ' . $group_name . '! Le lien Jitsi sera affiché ici.'
+            'post_content' => 'Bienvenue dans la classe ' . $group_name . '! Le lien Zoom sera affiché ici.'
         ]);
     }
 }
