@@ -92,25 +92,38 @@
 /* ===============================
    Zoom
 ================================ */
-.fl-class-zoom {
+.fl-class-zoom-open {
+    padding: 20px;
+    background: #f4f5f6;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
     text-align: center;
-    margin-top: 40px;
+}
+
+.fl-class-zoom-open p {
+    color: #155724;
+    font-weight: bold;
+    margin: 0 0 14px 0;
 }
 
 .fl-zoom-btn {
     display: inline-block;
-    background: #203955;
-    color: #ffffff;
-    padding: 14px 32px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
+    background: #203955 !important;
+    color: #ffffff !important;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none !important;
     transition: background 0.2s ease;
 }
 
-.fl-zoom-btn:hover {
-    background: #203955ac;
+.fl-zoom-btn:hover,
+.fl-zoom-btn:focus,
+.fl-zoom-btn:active {
+    background: #16283c !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
 }
 
 /* ===============================

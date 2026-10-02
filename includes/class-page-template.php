@@ -82,24 +82,25 @@ add_filter('the_content', function($content){
 
             <?php if ($zoom_enabled === '1'): ?>
 
-                <div class="fl-class-zoom">
+                <div class="fl-class-zoom-open" style="padding:20px; background:#f4f5f6; border:1px solid #c3e6cb; border-radius:6px; text-align:center;">
+                    <p style="color:#155724; font-weight:bold; margin:0 0 14px 0;">
+                        The class has started! Click below to join the live session.
+                    </p>
                     <?php if (!empty($zoom_link)): ?>
-                        <a href="<?= esc_url($zoom_link); ?>" target="_blank" rel="noopener noreferrer" class="fl-zoom-btn">
-                            Join Class
+                        <a href="<?= esc_url($zoom_link); ?>" target="_blank" rel="noopener noreferrer" class="fl-zoom-btn" style="display:inline-block; background:#203955; color:#ffffff !important; padding:12px 28px; border-radius:6px; font-size:15px; font-weight:600; text-decoration:none !important;">
+                            Join Zoom Classroom
                         </a>
                     <?php else: ?>
-                        <div style="padding:20px; background:#f4f5f6; border:1px solid #ffeeba; border-radius:6px; text-align:center;">
-                            <p style="color:#856404; font-weight:bold;">
-                                The class has started, but no Zoom link has been added yet.
-                            </p>
-                        </div>
+                        <p style="color:#856404; font-weight:bold; margin:0;">
+                            The class session is open, but no Zoom link has been added yet.
+                        </p>
                     <?php endif; ?>
                 </div>
 
             <?php else: ?>
 
                 <div class="fl-class-zoom-closed" style="padding:20px; background:#f4f5f6; border:1px solid #ffeeba; border-radius:6px; text-align:center;">
-                    <p style="color:#856404; font-weight:bold;">
+                    <p style="color:#856404; font-weight:bold; margin:0;">
                         ⏳ The class has not started yet. Please refresh the page or revisit this page at the scheduled time to join the class.
                     </p>
                 </div>
