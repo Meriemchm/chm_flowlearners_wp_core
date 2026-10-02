@@ -49,9 +49,20 @@ add_action('init', function () {
  */
 add_shortcode('fl_manage_groups', function () {
 
-    $user = wp_get_current_user();
+    // 1. Anti-caching protection: prevents caching plugins from storing unauthorized or stale HTML
+    if (!defined('DONOTCACHEPAGE')) {
+        define('DONOTCACHEPAGE', true);
+    }
+    nocache_headers();
 
-    if (!array_intersect(['administrator', 'tutor'], $user->roles)) {
+    // 2. Robust capability and role check: current_user_can ensures full cap resolution
+    $has_access = is_user_logged_in() && (
+        current_user_can('administrator') ||
+        current_user_can('tutor') ||
+        array_intersect(['administrator', 'tutor'], (array) wp_get_current_user()->roles)
+    );
+
+    if (!$has_access) {
         return '<p>Accès interdit</p>';
     }
 

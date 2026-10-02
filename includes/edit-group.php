@@ -8,7 +8,20 @@ if (!defined('ABSPATH')) exit;
  */
 add_shortcode('fl_edit_group', function () {
 
-    if (!current_user_can('tutor') && !current_user_can('administrator')) {
+    // 1. Anti-caching protection
+    if (!defined('DONOTCACHEPAGE')) {
+        define('DONOTCACHEPAGE', true);
+    }
+    nocache_headers();
+
+    // 2. Robust capability and role check
+    $has_access = is_user_logged_in() && (
+        current_user_can('tutor') ||
+        current_user_can('administrator') ||
+        array_intersect(['tutor', 'administrator'], (array) wp_get_current_user()->roles)
+    );
+
+    if (!$has_access) {
         return '<p>Accès interdit</p>';
     }
 

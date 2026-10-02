@@ -30,7 +30,7 @@ $current_id = get_queried_object_id();
         </li>
 
 <?php
-if (in_array('student', $user->roles)) {
+if (current_user_can('student') || in_array('student', (array) $user->roles)) {
 
     $page_to_show = null;
 
@@ -81,7 +81,7 @@ if (in_array('student', $user->roles)) {
 
 
 
-        if (array_intersect(['tutor', 'administrator'], $user->roles)) {
+        if (current_user_can('tutor') || current_user_can('administrator') || array_intersect(['tutor', 'administrator'], (array) $user->roles)) {
             ?>
             <li>
 

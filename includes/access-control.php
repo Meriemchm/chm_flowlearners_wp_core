@@ -5,19 +5,27 @@ if (!defined('ABSPATH')) exit;
 
 add_action('template_redirect', function () {
 
-    if (!is_user_logged_in()) return;
-
-    $user = wp_get_current_user();
-
-    // admins et tuteurs passent
-    if (array_intersect(['administrator', 'tutor'], $user->roles)) {
-        return;
-    }
-
     $page_id = get_queried_object_id();
     if (!$page_id) return;
 
     $slug = get_post_field('post_name', $page_id);
+
+    // Prevent caching engines from storing dynamic dashboard and classroom pages
+    if ($slug === 'manage-groups' || $slug === 'edit-group' || ($slug && str_starts_with($slug, 'page-classe-'))) {
+        if (!defined('DONOTCACHEPAGE')) {
+            define('DONOTCACHEPAGE', true);
+        }
+        nocache_headers();
+    }
+
+    if (!is_user_logged_in()) return;
+
+    $user = wp_get_current_user();
+
+    // Admins and tutors always have access (using robust current_user_can)
+    if (current_user_can('administrator') || current_user_can('tutor') || array_intersect(['administrator', 'tutor'], (array) $user->roles)) {
+        return;
+    }
 
     // Accepte tous les slugs générés dynamiquement (lettres, chiffres, tirets)
     if (!preg_match('/^page-classe-([a-z0-9\-]+)/i', $slug, $matches)) {

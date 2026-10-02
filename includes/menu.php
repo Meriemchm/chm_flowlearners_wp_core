@@ -2,21 +2,19 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * 1️⃣ Définir la visibilité
+ * 1️⃣ Définir la visibilité (Priority 20 to ensure authentication is fully resolved)
  */
 add_action('init', function() {
-    if (is_user_logged_in()) {
-        define('VISIBILITY', 'logged_in');
-    } else {
-        define('VISIBILITY', 'guest');
+    if (!defined('VISIBILITY')) {
+        define('VISIBILITY', is_user_logged_in() ? 'logged_in' : 'guest');
     }
-});
+}, 20);
 
 /**
  * 2️⃣ Ajouter une classe body selon la visibilité
  */
 add_filter('body_class', function($classes) {
-    if(defined('VISIBILITY') && VISIBILITY === 'logged_in') {
+    if (is_user_logged_in() || (defined('VISIBILITY') && VISIBILITY === 'logged_in')) {
         $classes[] = 'user-logged-in';
     }
     return $classes;
@@ -26,7 +24,7 @@ add_filter('body_class', function($classes) {
  * 3️⃣ Afficher la sidebar uniquement pour les utilisateurs connectés
  */
 add_action('wp_body_open', function () {
-    if(defined('VISIBILITY') && VISIBILITY === 'logged_in') {
+    if (is_user_logged_in() || (defined('VISIBILITY') && VISIBILITY === 'logged_in')) {
         require_once plugin_dir_path(__FILE__) . 'sidebar.php';
     }
 });
@@ -35,7 +33,7 @@ add_action('wp_body_open', function () {
  * 4️⃣ Charger CSS et icônes uniquement pour les utilisateurs connectés
  */
 add_action('wp_enqueue_scripts', function () {
-    if(!defined('VISIBILITY') || VISIBILITY !== 'logged_in') return;
+    if (!is_user_logged_in() && (!defined('VISIBILITY') || VISIBILITY !== 'logged_in')) return;
 
     wp_enqueue_style(
         'fa',
